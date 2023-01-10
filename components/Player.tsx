@@ -1,10 +1,14 @@
 import { PlayerType } from "../utils/playerHelper"
 import { Card } from "./Card"
 
-const Player = ({ hand, id }:PlayerType) => {
+const currentPlayerIcon = (current:boolean):string => (
+  current ? '⭐️' : '⭕️'
+)
+
+const Player = ({ hand, id, current }:PlayerType) => {
   return (
     <div key={id}>
-      Player:
+      {currentPlayerIcon(current)} Player:
       <ul>
         {hand.map(card => (
           <li key={card.id}>
