@@ -1,6 +1,14 @@
 import { useState } from "react"
 
-import { generateDeck } from "../utils/deckHelper"
+import Player from './Player'
+import { Card } from "../utils/deckHelper"
+import { PlayerType } from "../utils/playerHelper"
+
+// import { generateDeck, getRandomCard } from "../utils/deckHelper"
+// import { getPlayers, updatePlayer } from '../utils/playerHelper'
+
+import { start } from "../utils/gameStarter"
+
 
 const Game = () => {
   // X deck
@@ -11,12 +19,19 @@ const Game = () => {
   // misfires
   // players
     // cards
-  const [deck, setDeck] = useState(generateDeck())
+  const [deck, setDeck] = useState<Card[]>([])
+  const [players, setPlayers] = useState<PlayerType[]>([])
+
+  const startGame = () => {
+    const {deck, players} = start()
+    setDeck(deck)
+    setPlayers(players)
+  }
 
   return(
     <div>
-      This is game.
-      {console.log(deck)}
+      <button onClick={startGame}>Deal</button>
+      {players.map(player => <Player key={player.id} {...player} />)}
     </div>
   )
 }
