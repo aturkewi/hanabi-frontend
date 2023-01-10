@@ -1,7 +1,7 @@
-import { Card } from './deckHelper'
+import { CardType } from './deckHelper'
 
 export type PlayerType = {
-  hand: Card[];
+  hand: CardType[];
   id: number;
 }
 

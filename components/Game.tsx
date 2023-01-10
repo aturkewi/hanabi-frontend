@@ -31,7 +31,13 @@ const Game = () => {
   return(
     <div>
       <button onClick={startGame}>Deal</button>
-      {players.map(player => <Player key={player.id} {...player} />)}
+      <ul>
+        {players.map(player => (
+          <li key={player.id}>
+            <Player {...player} />
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
