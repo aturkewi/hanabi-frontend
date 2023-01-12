@@ -1,11 +1,11 @@
 import { CardType, ColorType } from "./deckHelper"
 
-type PlayedCard = {
+type PlayedCardsType = {
   [key: ColorType]: CardType[]
 }
 
 interface Cards {
-  playedCards: PlayedCard;
+  playedCards: PlayedCardsType;
   playedCard: CardType;
 }
 

@@ -34,7 +34,9 @@ const Game = () => {
 
   return(
     <div>
-      <button onClick={startGame}>Deal</button>
+      {players.length === 0 ? (
+        <button onClick={startGame}>Deal</button>
+      ) : ''}
       <ul>
         {players.map(player => (
           <li key={player.id}>
