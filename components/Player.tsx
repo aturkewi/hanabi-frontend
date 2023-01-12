@@ -1,3 +1,4 @@
+import { CardType } from "../utils/deckHelper";
 import { PlayerType } from "../utils/playerHelper"
 import { Card } from "./Card"
 
@@ -5,13 +6,18 @@ const currentPlayerIcon = (current:boolean):string => (
   current ? '⭐️' : '⭕️'
 )
 
-const Player = ({ hand, id, current }:PlayerType) => {
+interface ComponentType {
+  player: PlayerType;
+  playCard: (card: CardType) => void;
+}
+
+const Player = ({ player: {hand, id, current}, playCard }:ComponentType) => {
   return (
     <div key={id}>
       {currentPlayerIcon(current)} Player:
       <ul>
         {hand.map(card => (
-          <li key={card.id}>
+          <li key={card.id} onClick={() => playCard(card)}>
             <Card {...card} />
           </li>
         ) )}

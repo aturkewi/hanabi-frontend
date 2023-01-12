@@ -1,13 +1,15 @@
 import { useState } from "react"
 
 import Player from './Player'
-import { CardType } from "../utils/deckHelper"
+import { CardType, BLUE, GREEN, RED, WHITE, YELLOW } from "../utils/deckHelper"
 import { PlayerType } from "../utils/playerHelper"
+import { PlayedCardsType, playCard } from "../utils/playHelper"
 
 // import { generateDeck, getRandomCard } from "../utils/deckHelper"
 // import { getPlayers, updatePlayer } from '../utils/playerHelper'
 
 import { start } from "../utils/gameStarter"
+import { PlayedCards } from "./PlayedCards"
 
 
 const Game = () => {
@@ -21,6 +23,7 @@ const Game = () => {
     // cards
   const [deck, setDeck] = useState<CardType[]>([])
   const [players, setPlayers] = useState<PlayerType[]>([])
+  const [playedCards, setPlayedCards] = useState<PlayedCardsType[]>({[BLUE]: [], [GREEN]: [], [RED]: [], [WHITE]: [], [YELLOW]: []})
 
   const startGame = () => {
     const {deck, players} = start()
@@ -28,8 +31,9 @@ const Game = () => {
     setPlayers(players)
   }
 
-  const handlePlayCard = () => [
+  const handlePlayCard = (playedCard:CardType) => [
     // handle playing a card
+    playCard({playedCards, playedCard, players, deck, setDeck, setPlayers, setPlayedCards})
   ]
 
   return(
@@ -37,13 +41,15 @@ const Game = () => {
       {players.length === 0 ? (
         <button onClick={startGame}>Deal</button>
       ) : ''}
+      <h2>Players</h2>
       <ul>
         {players.map(player => (
           <li key={player.id}>
-            <Player {...player} />
+            <Player player={player} playCard={handlePlayCard}/>
           </li>
         ))}
       </ul>
+      <PlayedCards playedCards={playedCards}/>
     </div>
   )
 }

@@ -3,13 +3,13 @@ import { CardType } from './deckHelper'
 export type PlayerType = {
   hand: CardType[];
   current: boolean;
-  id: number;
+  id: string;
 }
 
 export const getPlayers = (numberOfPlayers:number): PlayerType[] => {
   const players = []
   for(let i = 0; i < numberOfPlayers; i++){
-    players.push({id: i, hand: [], current: false})
+    players.push({id: `player-${i}`, hand: [], current: false})
   }
   players[0].current = true
   return players
