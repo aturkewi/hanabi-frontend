@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { CardType, BLUE, GREEN, RED, WHITE, YELLOW } from "../utils/deckHelper"
 import { PlayerType } from "../utils/playerHelper"
@@ -26,6 +26,12 @@ const Game = () => {
   const [playedCards, setPlayedCards] = useState<PlayedCardsType[]>({[BLUE]: [], [GREEN]: [], [RED]: [], [WHITE]: [], [YELLOW]: []})
   const [discardedCards, setDiscardedCards] = useState<PlayedCardsType[]>({[BLUE]: [], [GREEN]: [], [RED]: [], [WHITE]: [], [YELLOW]: []})
   const [misses, setMisses] = useState<number>(4)
+
+  useEffect(() => {
+    if(misses === 0){
+      alert('GAME OVER!')
+    }
+  }, [misses])
 
   const deprecateMisses = () => {
     setMisses(misses - 1)
