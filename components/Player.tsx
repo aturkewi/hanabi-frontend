@@ -11,17 +11,17 @@ const getButtons = ({current, card, playCard, discardCard}:{current: boolean, ca
 )
 
 const currentPlayerButtons = (card: CardType, playCard: (card:CardType) => void, discardCard: (card:CardType) => void):JSX.Element => (
-  <div>
+  <>
     <span onClick={() => playCard(card)}>▶️</span>
     <span onClick={() => discardCard(card)}>🗑</span>
-  </div>
+  </>
 )
 
 const otherPlayerButtons = ():JSX.Element => (
-  <div>
+  <>
     <span>#️⃣</span>
     <span>🎨</span>
-  </div>
+  </>
 )
 
 const discardCard = (card: CardType) => {
