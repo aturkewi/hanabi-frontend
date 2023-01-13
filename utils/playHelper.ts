@@ -11,36 +11,42 @@ interface Cards {
 }
 
 interface ActOnCard {
+  deprecateMisses: () => void;
   setDeck: (a: CardType[]) => void;
   setPlayers: (players: PlayerType[]) => void;
-  setPlayedCards: (playedCards: PlayedCardsType) => void;
+  setPlayedCards: (playedCards: PlayedCardsType[]) => void;
+  setDiscardedCards: (playedCards: PlayedCardsType[]) => void;
   players: PlayerType[];
+  discardedCards: PlayedCardsType[];
   deck: CardType[];
 }
 
 type ActOnCardType = Cards & ActOnCard
 
-export const playCard = ({playedCards, playedCard, players, deck, setDeck, setPlayers, setPlayedCards}: ActOnCardType) => {
+export const playCard = ({playedCards, discardedCards, playedCard, players, deck, setDeck, setPlayers, setPlayedCards, setDiscardedCards, deprecateMisses}: ActOnCardType) => {
   let currentPlayer = players.find(player => player.current) as PlayerType
   let hand = currentPlayer.hand
   if(isPlayable({playedCards, playedCard})){
     // add card to played cards
     setPlayedCards({...playedCards, [playedCard.color]: [...playedCards[playedCard.color], playedCard]})
-
-    // remove card from player hand
-    hand = hand.filter(card => card.id != playedCard.id)
   }else{
     // add card to discarded cards
+    setDiscardedCards({...discardedCards, [playedCard.color]: [...discardedCards[playedCard.color], playedCard ]})
     // signal to deprecate counter
+    deprecateMisses()
   }
+  // remove card from player hand
+  hand = hand.filter(card => card.id != playedCard.id)
+
   // draw new card
   const {randomCard, newDeck} = getRandomCard(deck)
   setDeck(newDeck)
-
-  // change current player
   hand = [...hand, randomCard]
   currentPlayer = {...currentPlayer, hand}
+
+  // change current player
   const newPlayerList = updatePlayers(players, currentPlayer)
+
   setPlayers(newPlayerList)
 }
 

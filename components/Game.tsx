@@ -1,6 +1,5 @@
 import { useState } from "react"
 
-import Player from './Player'
 import { CardType, BLUE, GREEN, RED, WHITE, YELLOW } from "../utils/deckHelper"
 import { PlayerType } from "../utils/playerHelper"
 import { PlayedCardsType, playCard } from "../utils/playHelper"
@@ -15,7 +14,7 @@ import { Players } from "./Players"
 
 const Game = () => {
   // X deck
-  // played
+  // X played
   // discarded
   // current player
   // guess tokens
@@ -25,6 +24,12 @@ const Game = () => {
   const [deck, setDeck] = useState<CardType[]>([])
   const [players, setPlayers] = useState<PlayerType[]>([])
   const [playedCards, setPlayedCards] = useState<PlayedCardsType[]>({[BLUE]: [], [GREEN]: [], [RED]: [], [WHITE]: [], [YELLOW]: []})
+  const [discardedCards, setDiscardedCards] = useState<PlayedCardsType[]>({[BLUE]: [], [GREEN]: [], [RED]: [], [WHITE]: [], [YELLOW]: []})
+  const [misses, setMisses] = useState<number>(4)
+
+  const deprecateMisses = () => {
+    setMisses(misses - 1)
+  }
 
   const startGame = () => {
     const {deck, players} = start()
@@ -33,8 +38,7 @@ const Game = () => {
   }
 
   const handlePlayCard = (playedCard:CardType) => [
-    // handle playing a card
-    playCard({playedCards, playedCard, players, deck, setDeck, setPlayers, setPlayedCards})
+    playCard({playedCards, playedCard, players, deck, discardedCards, setDeck, setPlayers, setPlayedCards, setDiscardedCards, deprecateMisses})
   ]
 
   return(
@@ -42,7 +46,12 @@ const Game = () => {
       {players.length === 0 ? (
         <button onClick={startGame}>Deal</button>
       ) : ''}
-      <PlayedCards playedCards={playedCards}/>
+      <div className="module">
+      <h2>Misses Remaining: {misses}</h2>
+      </div>
+
+      <PlayedCards title='Played Cards' playedCards={playedCards}/>
+      <PlayedCards title='Discarded Cards' playedCards={discardedCards}/>
       <Players players={players} handlePlayCard={handlePlayCard}/>
     </div>
   )
