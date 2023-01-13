@@ -10,6 +10,7 @@ import { PlayedCardsType, playCard } from "../utils/playHelper"
 
 import { start } from "../utils/gameStarter"
 import { PlayedCards } from "./PlayedCards"
+import { Players } from "./Players"
 
 
 const Game = () => {
@@ -41,15 +42,8 @@ const Game = () => {
       {players.length === 0 ? (
         <button onClick={startGame}>Deal</button>
       ) : ''}
-      <h2>Players</h2>
-      <ul>
-        {players.map(player => (
-          <li key={player.id}>
-            <Player player={player} playCard={handlePlayCard}/>
-          </li>
-        ))}
-      </ul>
       <PlayedCards playedCards={playedCards}/>
+      <Players players={players} handlePlayCard={handlePlayCard}/>
     </div>
   )
 }

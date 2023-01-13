@@ -105,3 +105,13 @@ a {
     color-scheme: dark;
   }
 }
+
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.module {
+  padding: 25px 0px 25px 0px
+}
