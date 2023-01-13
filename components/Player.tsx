@@ -15,13 +15,13 @@ const Player = ({ player: {hand, id, current}, playCard }:ComponentType) => {
   return (
     <div key={id}>
       {currentPlayerIcon(current)} Player:
-      <ul>
-        {hand.map(card => (
-          <li key={card.id} onClick={() => playCard(card)}>
-            <Card {...card} />
-          </li>
-        ) )}
-      </ul>
+        <div className='row'>
+          {hand.map(card => (
+            <div key={card.id} onClick={() => playCard(card)}>
+              <Card {...card} />
+            </div>
+          ))}
+        </div>
     </div>
   )
 }

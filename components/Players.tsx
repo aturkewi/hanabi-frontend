@@ -6,7 +6,7 @@ export const Players = ({ players, handlePlayCard }:{players: PlayerType[], hand
   return (
     <div className="module">
       <h2 className='row'>Players</h2>
-      <div className="row">
+      <div>
         {players.map(player => (
           <Player key={player.id} player={player} playCard={handlePlayCard}/>
         ))}

@@ -16,11 +16,11 @@ const Game = () => {
   // X deck
   // X played
   // discarded
-  // current player
+  // X current player
   // guess tokens
-  // misfires
-  // players
-    // cards
+  // X misfires
+  // X players
+    // X cards
   const [deck, setDeck] = useState<CardType[]>([])
   const [players, setPlayers] = useState<PlayerType[]>([])
   const [playedCards, setPlayedCards] = useState<PlayedCardsType[]>({[BLUE]: [], [GREEN]: [], [RED]: [], [WHITE]: [], [YELLOW]: []})
@@ -52,8 +52,8 @@ const Game = () => {
       {players.length === 0 ? (
         <button onClick={startGame}>Deal</button>
       ) : ''}
-      <div className="module">
-      <h2>Misses Remaining: {misses}</h2>
+      <div className="row module">
+        <h2>Misses Remaining: {misses} | Cards left in deck: {deck.length}</h2>
       </div>
 
       <PlayedCards title='Played Cards' playedCards={playedCards}/>
