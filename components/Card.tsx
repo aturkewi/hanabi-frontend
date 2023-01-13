@@ -1,7 +1,7 @@
 import { CardType } from "../utils/deckHelper"
 import styles from './Card.module.css'
 
-export const Card = (cardData:CardType) => {
+export const Card = ({cardData, children}:{children:JSX.Element, cardData:CardType}) => {
   // If current player
   //  - Play
   //  - Discard
@@ -11,6 +11,9 @@ export const Card = (cardData:CardType) => {
   return (
     <div className={`${styles.card} ${styles[cardData.color.toLowerCase()]}`}>
       {cardData.number}
+      <div className={styles.actions}>
+        {children}
+      </div>
     </div>
   )
 }

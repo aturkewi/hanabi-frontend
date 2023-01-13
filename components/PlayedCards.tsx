@@ -11,7 +11,7 @@ export const PlayedCards = ({playedCards, title}:{playedCards: PlayedCardsType[]
         {Object.keys(playedCards).map(color => (
           <div key={color}>
             <h3>{color}</h3>
-              {playedCards[color].map(card => <Card key={card.id} {...card}/>)}
+              {playedCards[color].map(card => <Card key={card.id} cardData={card}/>)}
           </div>
         ))}
       </div>

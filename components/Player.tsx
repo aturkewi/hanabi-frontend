@@ -6,6 +6,28 @@ const currentPlayerIcon = (current:boolean):string => (
   current ? '⭐️' : '⭕️'
 )
 
+const getButtons = ({current, card, playCard, discardCard}:{current: boolean, card: CardType, playCard: (card:CardType) => void, discardCard: (card:CardType) => void;}):JSX.Element => (
+  current ? currentPlayerButtons(card, playCard, discardCard) : otherPlayerButtons()
+)
+
+const currentPlayerButtons = (card: CardType, playCard: (card:CardType) => void, discardCard: (card:CardType) => void):JSX.Element => (
+  <div>
+    <span onClick={() => playCard(card)}>▶️</span>
+    <span onClick={() => discardCard(card)}>🗑</span>
+  </div>
+)
+
+const otherPlayerButtons = ():JSX.Element => (
+  <div>
+    <span>#️⃣</span>
+    <span>🎨</span>
+  </div>
+)
+
+const discardCard = (card: CardType) => {
+  console.log('discarding card')
+}
+
 interface ComponentType {
   player: PlayerType;
   playCard: (card: CardType) => void;
@@ -17,9 +39,9 @@ const Player = ({ player: {hand, id, current}, playCard }:ComponentType) => {
       {currentPlayerIcon(current)} Player:
         <div className='row'>
           {hand.map(card => (
-            <div key={card.id} onClick={() => playCard(card)}>
-              <Card {...card} />
-            </div>
+            <Card key={card.id} cardData={card}>
+              {getButtons({current, card, playCard, discardCard})}
+            </Card>
           ))}
         </div>
     </div>
