@@ -15,10 +15,12 @@ const Game = () => {
   // X played
   // X discarded
   // X current player
-  // guess tokens
+  // X guess tokens
   // X misfires
   // X players
     // X cards
+  // clue tracking
+  // hide cards
   const [deck, setDeck] = useState<CardType[]>([])
   const [players, setPlayers] = useState<PlayerType[]>([])
   const [playedCards, setPlayedCards] = useState<PlayedCardsType>({[BLUE]: [], [GREEN]: [], [RED]: [], [WHITE]: [], [YELLOW]: []})
