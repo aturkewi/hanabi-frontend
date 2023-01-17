@@ -15,7 +15,4 @@ export const getPlayers = (numberOfPlayers:number): PlayerType[] => {
   return players
 }
 
-export const updatePlayer = (players, player, newCards) => {
-  const wihtoutKeyPlayer = players.filter(p => p.id == player.id)
-  return [...wihtoutKeyPlayer, {...player, hand: newCards}]
-}
+export const getCurrentPlayer = (players:PlayerType[]):PlayerType => players.find(player => player.current) as PlayerType

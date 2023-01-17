@@ -1,5 +1,5 @@
 import { CardType, ColorType, getRandomCard } from "./deckHelper"
-import { PlayerType } from "./playerHelper";
+import { getCurrentPlayer, PlayerType } from "./playerHelper";
 
 export type PlayedCardsType = {
   [key: ColorType]: CardType[]
@@ -14,8 +14,8 @@ interface ActOnCard {
   deprecateMisses: () => void;
   setDeck: (a: CardType[]) => void;
   setPlayers: (players: PlayerType[]) => void;
-  setPlayedCards: (playedCards: PlayedCardsType[]) => void;
-  setDiscardedCards: (playedCards: PlayedCardsType[]) => void;
+  setPlayedCards: (playedCards: PlayedCardsType) => void;
+  setDiscardedCards: (playedCards: PlayedCardsType) => void;
   players: PlayerType[];
   discardedCards: PlayedCardsType[];
   deck: CardType[];
@@ -24,7 +24,7 @@ interface ActOnCard {
 type ActOnCardType = Cards & ActOnCard
 
 export const playCard = ({playedCards, discardedCards, playedCard, players, deck, setDeck, setPlayers, setPlayedCards, setDiscardedCards, deprecateMisses}: ActOnCardType) => {
-  let currentPlayer = players.find(player => player.current) as PlayerType
+  let currentPlayer = getCurrentPlayer(players)
   let hand = currentPlayer.hand
   if(isPlayable({playedCards, playedCard})){
     // add card to played cards
@@ -39,18 +39,22 @@ export const playCard = ({playedCards, discardedCards, playedCard, players, deck
   hand = hand.filter(card => card.id != playedCard.id)
 
   // draw new card
+  currentPlayer = drawCard({deck, setDeck, hand, currentPlayer})
+
+  // change current player
+  updatePlayers(players, currentPlayer, setPlayers)
+}
+
+export const drawCard = ({deck, setDeck, hand, currentPlayer}:{deck: CardType[], setDeck: (a:CardType[]) => void, hand: CardType[], currentPlayer: PlayerType}) => {
   const {randomCard, newDeck} = getRandomCard(deck)
   setDeck(newDeck)
   hand = [...hand, randomCard]
   currentPlayer = {...currentPlayer, hand}
 
-  // change current player
-  const newPlayerList = updatePlayers(players, currentPlayer)
-
-  setPlayers(newPlayerList)
+  return currentPlayer
 }
 
-const updatePlayers = (players: PlayerType[], currentPlayer: PlayerType): PlayerType[] => {
+export const updatePlayers = (players: PlayerType[], currentPlayer: PlayerType, setPlayers: (a:PlayerType[]) => void): void => {
   const currentPlayerIndex = players.findIndex(player => player.id === currentPlayer.id)
   const nextPlayerIndex = players.length - 1 === currentPlayerIndex ? 0 : currentPlayerIndex + 1
   const newPlayerList = [...players]
@@ -58,7 +62,7 @@ const updatePlayers = (players: PlayerType[], currentPlayer: PlayerType): Player
   newPlayerList[currentPlayerIndex] = {...currentPlayer, current: false}
   newPlayerList[nextPlayerIndex] = {...players[nextPlayerIndex], current: true}
 
-  return newPlayerList
+  setPlayers(newPlayerList)
 }
 
 const isPlayable = ({playedCards, playedCard}: Cards):boolean => {

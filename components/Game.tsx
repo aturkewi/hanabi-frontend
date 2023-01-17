@@ -4,18 +4,16 @@ import { CardType, BLUE, GREEN, RED, WHITE, YELLOW } from "../utils/deckHelper"
 import { PlayerType } from "../utils/playerHelper"
 import { PlayedCardsType, playCard } from "../utils/playHelper"
 
-// import { generateDeck, getRandomCard } from "../utils/deckHelper"
-// import { getPlayers, updatePlayer } from '../utils/playerHelper'
-
 import { start } from "../utils/gameStarter"
 import { PlayedCards } from "./PlayedCards"
 import { Players } from "./Players"
 
+import { discardCard } from "../utils/discardHelper"
 
 const Game = () => {
   // X deck
   // X played
-  // discarded
+  // X discarded
   // X current player
   // guess tokens
   // X misfires
@@ -23,8 +21,8 @@ const Game = () => {
     // X cards
   const [deck, setDeck] = useState<CardType[]>([])
   const [players, setPlayers] = useState<PlayerType[]>([])
-  const [playedCards, setPlayedCards] = useState<PlayedCardsType[]>({[BLUE]: [], [GREEN]: [], [RED]: [], [WHITE]: [], [YELLOW]: []})
-  const [discardedCards, setDiscardedCards] = useState<PlayedCardsType[]>({[BLUE]: [], [GREEN]: [], [RED]: [], [WHITE]: [], [YELLOW]: []})
+  const [playedCards, setPlayedCards] = useState<PlayedCardsType>({[BLUE]: [], [GREEN]: [], [RED]: [], [WHITE]: [], [YELLOW]: []})
+  const [discardedCards, setDiscardedCards] = useState<PlayedCardsType>({[BLUE]: [], [GREEN]: [], [RED]: [], [WHITE]: [], [YELLOW]: []})
   const [misses, setMisses] = useState<number>(4)
   const [clues, setClues] = useState<number>(8)
 
@@ -73,7 +71,7 @@ const Game = () => {
 
       <PlayedCards title='Played Cards' playedCards={playedCards}/>
       <PlayedCards title='Discarded Cards' playedCards={discardedCards}/>
-      <Players players={players} handlePlayCard={handlePlayCard}/>
+      <Players players={players} handlePlayCard={handlePlayCard} handleDiscardCard={handleDiscardCard}/>
     </div>
   )
 }

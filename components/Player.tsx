@@ -24,16 +24,13 @@ const otherPlayerButtons = ():JSX.Element => (
   </>
 )
 
-const discardCard = (card: CardType) => {
-  console.log('discarding card')
-}
-
 interface ComponentType {
   player: PlayerType;
   playCard: (card: CardType) => void;
+  discardCard: (card: CardType) => void;
 }
 
-const Player = ({ player: {hand, id, current}, playCard }:ComponentType) => {
+const Player = ({ player: {hand, id, current}, playCard, discardCard }:ComponentType) => {
   return (
     <div key={id}>
       {currentPlayerIcon(current)} Player:
