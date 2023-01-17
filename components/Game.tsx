@@ -9,6 +9,7 @@ import { PlayedCards } from "./PlayedCards"
 import { Players } from "./Players"
 
 import { discardCard } from "../utils/discardHelper"
+import { ClueType, giveClue } from "../utils/clueHelper"
 
 const Game = () => {
   // X deck
@@ -62,6 +63,10 @@ const Game = () => {
     discardCard({playedCard, discardedCards, players, deck, setPlayers, setDeck, setDiscardedCards, incrementClueCount})
   }
 
+  const handleGiveClue = ({clue, player}:{clue: ClueType, player: PlayerType}) => {
+    giveClue({clue, player, players, setPlayers, decrementClueCount})
+  }
+
   return(
     <div>
       {players.length === 0 ? (
@@ -73,7 +78,7 @@ const Game = () => {
 
       <PlayedCards title='Played Cards' playedCards={playedCards}/>
       <PlayedCards title='Discarded Cards' playedCards={discardedCards}/>
-      <Players players={players} handlePlayCard={handlePlayCard} handleDiscardCard={handleDiscardCard}/>
+      <Players players={players} handlePlayCard={handlePlayCard} handleDiscardCard={handleDiscardCard} handleGiveClue={handleGiveClue}/>
     </div>
   )
 }

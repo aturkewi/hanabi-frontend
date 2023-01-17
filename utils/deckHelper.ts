@@ -7,7 +7,7 @@ export const YELLOW = 'YELLOW'
 export const colors = [BLUE, GREEN, RED, WHITE, YELLOW]
 
 export type ColorType = typeof colors[number]
-type ValidNumbers = 1|2|3|4|5
+export type ValidNumbers = 1|2|3|4|5
 
 export type CardType = {
   color: ColorType;

@@ -42,7 +42,7 @@ export const playCard = ({playedCards, discardedCards, playedCard, players, deck
   currentPlayer = drawCard({deck, setDeck, hand, currentPlayer})
 
   // change current player
-  updatePlayers(players, currentPlayer, setPlayers)
+  updatePlayers(players, setPlayers, currentPlayer)
 }
 
 export const drawCard = ({deck, setDeck, hand, currentPlayer}:{deck: CardType[], setDeck: (a:CardType[]) => void, hand: HeldCardType[], currentPlayer: PlayerType}) => {
@@ -54,7 +54,9 @@ export const drawCard = ({deck, setDeck, hand, currentPlayer}:{deck: CardType[],
   return currentPlayer
 }
 
-export const updatePlayers = (players: PlayerType[], currentPlayer: PlayerType, setPlayers: (a:PlayerType[]) => void): void => {
+export const updatePlayers = (players: PlayerType[], setPlayers: (a:PlayerType[]) => void, currentPlayerOverride?: PlayerType): void => {
+  const currentPlayer = currentPlayerOverride ? currentPlayerOverride : getCurrentPlayer(players)
+
   const currentPlayerIndex = players.findIndex(player => player.id === currentPlayer.id)
   const nextPlayerIndex = players.length - 1 === currentPlayerIndex ? 0 : currentPlayerIndex + 1
   const newPlayerList = [...players]
@@ -64,6 +66,7 @@ export const updatePlayers = (players: PlayerType[], currentPlayer: PlayerType, 
 
   setPlayers(newPlayerList)
 }
+
 
 const isPlayable = ({playedCards, playedCard}: Cards):boolean => {
   const cardsOnColor = playedCards[playedCard.color]

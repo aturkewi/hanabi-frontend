@@ -29,5 +29,5 @@ export const discardCard = ({playedCard, discardedCards, players, deck, setPlaye
   currentPlayer = drawCard({deck, setDeck, hand, currentPlayer})
 
   // Update players
-  updatePlayers(players, currentPlayer, setPlayers)
+  updatePlayers(players, setPlayers, currentPlayer)
 }
