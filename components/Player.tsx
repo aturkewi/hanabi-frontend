@@ -35,7 +35,7 @@ const Player = ({ player: {hand, id, current}, playCard, discardCard }:Component
     <div key={id}>
       {currentPlayerIcon(current)} Player:
         <div className='row'>
-          {hand.map(card => (
+          {hand.map(({card}) => (
             <Card key={card.id} cardData={card}>
               {getButtons({current, card, playCard, discardCard})}
             </Card>

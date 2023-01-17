@@ -9,7 +9,7 @@ export const start = () => {
     for(let i = 0; i < 4; i++){
       const {randomCard, newDeck} = getRandomCard(deck)
       deck = newDeck
-      player.hand.push(randomCard)
+      player.hand.push({card: randomCard, showColor: false, showNumber: false})
     }
   })
 

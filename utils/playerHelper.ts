@@ -1,9 +1,14 @@
 import { CardType } from './deckHelper'
 
 export type PlayerType = {
-  hand: CardType[];
+  hand: HeldCardType[];
   current: boolean;
   id: string;
+}
+export type HeldCardType = {
+  showColor: boolean;
+  showNumber: boolean;
+  card: CardType;
 }
 
 export const getPlayers = (numberOfPlayers:number): PlayerType[] => {

@@ -1,10 +1,10 @@
 import { CardType } from "./deckHelper"
 import { PlayerType, getCurrentPlayer } from "./playerHelper";
-import { drawCard, playCard, PlayedCardsType, updatePlayers } from "./playHelper";
+import { drawCard, PlayedCardsType, updatePlayers } from "./playHelper";
 
 interface DiscardCardInterface {
   playedCard: CardType;
-  discardedCards: PlayedCardsType[];
+  discardedCards: PlayedCardsType;
   players: PlayerType[];
   deck: CardType[];
   setPlayers: (players: PlayerType[]) => void;
@@ -17,7 +17,7 @@ export const discardCard = ({playedCard, discardedCards, players, deck, setPlaye
   // Remove from players hand
   let currentPlayer = getCurrentPlayer(players)
   let hand = currentPlayer.hand
-  hand = hand.filter(card => card.id != playedCard.id)
+  hand = hand.filter(({card}) => card.id != playedCard.id)
 
   // Add card to discarded
   setDiscardedCards({...discardedCards, [playedCard.color]: [...discardedCards[playedCard.color], playedCard ]})

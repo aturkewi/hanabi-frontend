@@ -1,7 +1,7 @@
 import { Card } from "./Card"
 import { PlayedCardsType } from "../utils/playHelper"
 
-export const PlayedCards = ({playedCards, title}:{playedCards: PlayedCardsType[], title: string}) => {
+export const PlayedCards = ({playedCards, title}:{playedCards: PlayedCardsType, title: string}) => {
   return (
     <div className="module">
       <div className="row">

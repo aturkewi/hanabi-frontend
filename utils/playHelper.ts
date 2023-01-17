@@ -1,12 +1,12 @@
 import { CardType, ColorType, getRandomCard } from "./deckHelper"
-import { getCurrentPlayer, PlayerType } from "./playerHelper";
+import { getCurrentPlayer, HeldCardType, PlayerType } from "./playerHelper";
 
 export type PlayedCardsType = {
   [key: ColorType]: CardType[]
 }
 
 interface Cards {
-  playedCards: PlayedCardsType[];
+  playedCards: PlayedCardsType;
   playedCard: CardType;
 }
 
@@ -17,7 +17,7 @@ interface ActOnCard {
   setPlayedCards: (playedCards: PlayedCardsType) => void;
   setDiscardedCards: (playedCards: PlayedCardsType) => void;
   players: PlayerType[];
-  discardedCards: PlayedCardsType[];
+  discardedCards: PlayedCardsType;
   deck: CardType[];
 }
 
@@ -36,7 +36,7 @@ export const playCard = ({playedCards, discardedCards, playedCard, players, deck
     deprecateMisses()
   }
   // remove card from player hand
-  hand = hand.filter(card => card.id != playedCard.id)
+  hand = hand.filter(({card}) => card.id != playedCard.id)
 
   // draw new card
   currentPlayer = drawCard({deck, setDeck, hand, currentPlayer})
@@ -45,10 +45,10 @@ export const playCard = ({playedCards, discardedCards, playedCard, players, deck
   updatePlayers(players, currentPlayer, setPlayers)
 }
 
-export const drawCard = ({deck, setDeck, hand, currentPlayer}:{deck: CardType[], setDeck: (a:CardType[]) => void, hand: CardType[], currentPlayer: PlayerType}) => {
+export const drawCard = ({deck, setDeck, hand, currentPlayer}:{deck: CardType[], setDeck: (a:CardType[]) => void, hand: HeldCardType[], currentPlayer: PlayerType}) => {
   const {randomCard, newDeck} = getRandomCard(deck)
   setDeck(newDeck)
-  hand = [...hand, randomCard]
+  hand = [...hand, {card: randomCard, showNumber: false, showColor: false}]
   currentPlayer = {...currentPlayer, hand}
 
   return currentPlayer
