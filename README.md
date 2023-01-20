@@ -2,6 +2,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+Following along https://dev.to/franciscomendes10866/how-to-implement-drag-and-drop-in-react-3j8j
+
 First, run the development server:
 
 ```bash
