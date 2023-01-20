@@ -16,7 +16,6 @@ export const giveClue = ({clue, player, players, setPlayers, decrementClueCount}
   const hand = player.hand
 
   // mark all cards in players hand for clue
-  // NOT GETTING PROPERLY MARKED
   const newHand = hand.map(heldCard => {
     const newHeldCard = {...heldCard}
     if(heldCard.card.color === clue){
@@ -35,7 +34,7 @@ export const giveClue = ({clue, player, players, setPlayers, decrementClueCount}
   const newPlayers = [...players]
   const playerIndex = newPlayers.findIndex(p => p.id === player.id)
   newPlayers[playerIndex] = newPlayer
-  updatePlayers(players, setPlayers)
+  updatePlayers(newPlayers, setPlayers)
 
   // decrement clue counter
   decrementClueCount()
