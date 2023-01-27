@@ -19,7 +19,7 @@ export const Draggable: FC<IDraggable> = ({id, children}) => {
   }, [transform])
 
   return(
-    <div ref={setNodeRef} style={style} {...listeners}>
+    <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
       { children }
     </div>
   )
